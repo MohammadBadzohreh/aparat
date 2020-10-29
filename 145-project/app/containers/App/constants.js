@@ -96,5 +96,9 @@ export const ADD_PLAY_LIST = 'app/App/ADD_PLAY_LIST';
 export const ADD_PLAY_LIST_SUCCESS = 'app/App/ADD_PLAY_LIST_SUCCESS';
 export const ADD_PLAY_LIST_FAIL = 'app/App/ADD_PLAY_LIST_FAIL';
 
+export const GET_COMMENTS = 'app/App/GET_COMMENTS';
+export const GET_COMMENTS_SUCCESS = 'app/App/GET_COMMENTS_SUCCESS';
+export const GET_COMMENTS_FAIL = 'app/App/GET_COMMENTS_FAIL';
+
 export const FOLLOWERS_TYPE = 'followers';
 export const FOLLOWINGS_TYPE = 'followings';

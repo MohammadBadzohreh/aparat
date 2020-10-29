@@ -148,10 +148,16 @@ const makeSelectUnfollowChannel = () =>
     appState => appState.unfollowChannel,
   );
 
-const makeSelectFollowChannel = () =>
+  const makeSelectFollowChannel = () =>
   createSelector(
     selectApp,
     appState => appState.unfollowChannel,
+  );
+
+  const makeSelectComments = () =>
+  createSelector(
+    selectApp,
+    appState => appState.comments,
   );
 
 export {
@@ -178,4 +184,5 @@ export {
   makeSelectFollowersList,
   makeSelectUnfollowChannel,
   makeSelectFollowChannel,
+  makeSelectComments,
 };

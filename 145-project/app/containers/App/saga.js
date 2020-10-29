@@ -23,6 +23,7 @@ import {
   FOLLOWERS_TYPE,
   FOLLOWINGS_TYPE,
   FOLLOW_CHANNEL,
+  GET_COMMENTS,
 } from './constants';
 import {
   fileUploadFailAction,
@@ -64,6 +65,8 @@ import {
   getFollowersListFailAction,
   followChannelSuccessAction,
   followChannelFailAction,
+  getCommentsSuccessAction,
+  getCommentsFailAction,
 } from './actions';
 
 import {
@@ -88,6 +91,7 @@ import {
   unfollowChannnelApi,
   followChannelApi,
 } from './APIs/users';
+import { getCommentApi } from './APIs/comment';
 
 const identity = a => a;
 
@@ -295,6 +299,14 @@ function* followChannel({ channel }) {
     yield put(followChannelFailAction(error));
   }
 }
+function* getComments() {
+  try {
+    const response = yield call(getCommentApi);
+    yield put(getCommentsSuccessAction(response.data));
+  } catch (error) {
+    yield put(getCommentsFailAction(error));
+  }
+}
 
 export default function* defaultSaga() {
   yield takeLatest(FILE_UPLOAD, uploadFileToServer);
@@ -315,4 +327,5 @@ export default function* defaultSaga() {
   yield takeLatest(GET_FOLLOWER_LIST, getFollowersFromServer);
   yield takeLatest(UNFOLLOW_CHANNEL, unfollowChannel);
   yield takeLatest(FOLLOW_CHANNEL, followChannel);
+  yield takeLatest(GET_COMMENTS, getComments);
 }

@@ -67,6 +67,9 @@ import {
   FOLLOW_CHANNEL,
   FOLLOW_CHANNEL_SUCCESS,
   FOLLOW_CHANNEL_FAIL,
+  GET_COMMENTS,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAIL,
 } from './constants';
 
 export function errorHappenAction(error) {
@@ -498,6 +501,25 @@ export function followChannelSuccessAction(data) {
 export function followChannelFailAction(error) {
   return {
     type: FOLLOW_CHANNEL_FAIL,
+    error,
+  };
+}
+
+export function getCommentsAction() {
+  console.log("into");
+  return {
+    type: GET_COMMENTS,
+  };
+}
+export function getCommentsSuccessAction(data) {
+  return {
+    type: GET_COMMENTS_SUCCESS,
+    data,
+  };
+}
+export function getCommentsFailAction(error) {
+  return {
+    type: GET_COMMENTS_FAIL,
     error,
   };
 }

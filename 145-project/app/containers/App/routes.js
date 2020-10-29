@@ -6,3 +6,4 @@ export const UPLOAD_ROUTE = '/upload';
 export const GET_VIDEO_ROUTE = '/video/:slug/update';
 export const SHOW_VIDEO_ROUTE = '/:slug/view';
 export const FOLLOW_ROUTE = '/followed';
+export const COMMENT_ROUTE = '/comments';

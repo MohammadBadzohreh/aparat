@@ -67,6 +67,9 @@ import {
   FOLLOW_CHANNEL,
   FOLLOW_CHANNEL_SUCCESS,
   FOLLOW_CHANNEL_FAIL,
+  GET_COMMENTS,
+  GET_COMMENTS_SUCCESS,
+  GET_COMMENTS_FAIL,
 } from './constants';
 
 export const initialState = {
@@ -161,6 +164,10 @@ export const initialState = {
     channel: null,
     data: null,
     error: null,
+  },
+  comments:{
+    data:null,
+    error:null,
   },
 };
 
@@ -436,7 +443,6 @@ const appReducer = (state = initialState, action) =>
       case GET_FOLLOWER_LIST:
         draft.getFollowersList.data = null;
         draft.getFollowersList.error = null;
-
         break;
       case GET_FOLLOWER_LIST_SUCCESS:
         draft.getFollowersList.data = action.data;
@@ -520,6 +526,18 @@ const appReducer = (state = initialState, action) =>
         draft.followChannel.channel = null;
         draft.followChannel.data = null;
         draft.followChannel.error = action.error;
+        break;
+      case GET_COMMENTS:
+        draft.comments.data = null;
+        draft.comments.error = null;
+        break;
+      case GET_COMMENTS_SUCCESS:
+        draft.comments.data = action.data;
+        draft.comments.error = null;
+        break;
+      case GET_COMMENTS_FAIL:
+        draft.comments.data = null;
+        draft.comments.error = action.error;
         break;
     }
   });
