@@ -11,6 +11,7 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { GET_VIDEO_ROUTE } from 'containers/App/routes';
+import { getAge } from 'utils/helpers';
 
 const VideoShowWrapper = styled(Grid)`
   box-shadow: 2px 0px 3px 2px #bebebe;
@@ -70,14 +71,7 @@ function VideoShow({ video, redirectToEdit }) {
   function handleRedirectToUpdate() {
     redirectToEdit(GET_VIDEO_ROUTE.replace(':slug', video.slug));
   }
-  function getAge() {
-    if (video.created_age <= 7) return `${video.created_age}روز پیش`;
-    if (video.created_age <= 30)
-      return `${Math.floor(video.created_age / 7)}هفته پیش`;
-    if (video.created_age <= 365)
-      return `${Math.floor(video.created_age / 30)}ماه پیش`;
-    return `${Math.floor(video.created_age / 365)}سال پیش`;
-  }
+
   return (
     <VideoShowWrapper container>
       <Grid item xs={12} sm={4} md={4} className="videoInformation">
@@ -88,7 +82,7 @@ function VideoShow({ video, redirectToEdit }) {
           <h2 className="title">{video.title.substring(0, 50)}</h2>
         </Tooltip>
         <p>
-          {video.views} بازدید.{getAge()}
+          {video.views} بازدید.{getAge(video.created_age)}
         </p>
 
         <Tooltip title={video.info}>
