@@ -157,7 +157,36 @@ const makeSelectUnfollowChannel = () =>
   const makeSelectComments = () =>
   createSelector(
     selectApp,
-    appState => appState.comments,
+    appState =>{
+      if(appState.comments.data){
+       const  data =  appState.comments.data.reduce((carry,item)=>{
+          if(!item.parent_id){
+              return {
+                  ...carry,
+                  [item.id] :{
+                      ...item,
+                      children:[],
+                  }
+                  
+              }
+          }
+          return {
+              ...carry,
+              [item.parent_id]:{
+                  ...carry[item.parent_id],
+                  children:[...carry[item.parent_id].children,item],
+              }
+          }
+      
+      },{});
+
+      return {
+        ...appState.comments,
+        data:Object.values(data),
+      };
+      }
+      return appState.comments;
+    }
   );
 
 export {

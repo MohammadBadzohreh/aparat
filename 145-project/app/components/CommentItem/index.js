@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
 import { Person as UserIcon} from '@material-ui/icons';
 import { getAge } from 'utils/helpers';
+import { COMMENT_STATE_ACCEPTED } from 'utils/constants';
+import CountingText from 'components/CountingText';
 
 const CommentItemWrapper = styled.div`
 display: flex;
@@ -27,8 +29,6 @@ padding: 1em 1.2em;
         display: block;
     }
 }
-
-
 & .content{
     width:100%;
     margin: .2em .5em;
@@ -38,6 +38,9 @@ padding: 1em 1.2em;
             font-weight:bold;
             font-size:12px;
             margin-left: .8em;
+        }
+        .commentAge{
+            display:inline-block;
         }
         span{
             font-size:10px;
@@ -70,46 +73,85 @@ padding: 1em 1.2em;
 }
 .banner{
     width:180px;
+    height:120px;
     > img{
         width:100%;
         height:100%;
     }
 }
+
+.user-avatar{
+    width:30px;
+    height:30px;
+}
 `
 
-function CommentItem({data}){
+function CommentItem({data,isSubItem}){
+    console.log(data);
+    const [showAnswerCard,setShowAnswerCard] = useState(false);
+
+    function handleChangeAnswer(value){
+        console.log(value);
+    }
 return(
     <CommentItemWrapper>
         <div className="user">
-            <UserIcon />
+            <img className="user-avatar" src={data.user.avatar} alt="تصویر کاربر" />
 
         </div>
         <div className="content">
             <div className="header">
             <b>{data.user.name}</b>
+            <div className="commentAge">
             <span>{getAge(data.createdAge)}</span>
             </div>
+            </div>
             <div className="body">
-                این یک کامنت است برای یک ویدیو
+                {data.body}
             </div>
             <div className="footer">
-                <Button className="btn btn-answer">پاسخ</Button>
-                <Button className="btn btn-accept">تایید دیدگاه</Button>
+                {
+                    ! isSubItem && (
+                        <Button className="btn btn-answer" onClick={()=>setShowAnswerCard(!showAnswerCard)}>پاسخ</Button>
+                    )
+                }
+                {
+                    data.state !== COMMENT_STATE_ACCEPTED && (
+                        <Button className="btn btn-accept">تایید دیدگاه</Button>
+                    )
+                }
                 <Button className="btn btn-delete">حذف دیدگاه</Button>
+                {
+                    showAnswerCard && <CountingText onChange={handleChangeAnswer} onCancel={()=>setShowAnswerCard(false)} maxLength={5} />
+                }
+               
+                
             </div>
+            {
+                !!(data.children && data.children.length) && data.children.map(item=> <CommentItem key={item.id} data={item} isSubItem />)
+            }
         </div>
-        <div className="banner">
-            <img src={data.video_banner ? 
-            data.banner_path + data.video_banner
-            : data.banner_path  + "../../images/no-item.png"}
-            alt="تصویر ویدئو"
-            />
-        </div>
+        {
+            !isSubItem && (
+                <div className="banner">
+                <img src={data.video_banner ? 
+                data.banner_path + data.video_banner
+                : data.banner_path  + "../../images/no-item.png"}
+                alt="تصویر ویدئو"
+                />
+            </div>
+            )
+        }
+       
    
     </CommentItemWrapper>
 )
 }
 CommentItem.prototype={
     data: propTypes.object,
+    isSubItem:propTypes.bool,
   }
+CommentItem.defaultProps={
+    isSubItem:false,
+}
 export default CommentItem;

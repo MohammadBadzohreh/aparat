@@ -6,6 +6,7 @@ import CommentItem from 'components/CommentItem';
 
 const CommentListWrapper = styled.div``;
 function CommmentList({ comments }){
+  console.log(comments);
     console.log(comments);
     return (
         <CommentListWrapper>
