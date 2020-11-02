@@ -6,3 +6,16 @@ export function getCommentApi() {
   };
   return request(config);
 }
+
+
+export function addCommentApi(params) {
+  const config = {
+    method: 'post',
+    url: `/comment`,
+    data: params,
+  };
+  return request(config);
+}
+
+
+

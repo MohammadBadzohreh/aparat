@@ -70,6 +70,9 @@ import {
   GET_COMMENTS,
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAIL,
+  ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAIL,
 } from './constants';
 
 export function errorHappenAction(error) {
@@ -506,7 +509,6 @@ export function followChannelFailAction(error) {
 }
 
 export function getCommentsAction() {
-  console.log("into");
   return {
     type: GET_COMMENTS,
   };
@@ -520,6 +522,29 @@ export function getCommentsSuccessAction(data) {
 export function getCommentsFailAction(error) {
   return {
     type: GET_COMMENTS_FAIL,
+    error,
+  };
+}
+
+// add comments
+
+
+
+export function addCommentsAction(params) {
+  return {
+    type: ADD_COMMENT,
+    params,
+  };
+}
+export function addCommentSuccessAction(data) {
+  return {
+    type: ADD_COMMENT_SUCCESS,
+    data,
+  };
+}
+export function addCommentFailAction(error) {
+  return {
+    type: ADD_COMMENT_FAIL,
     error,
   };
 }

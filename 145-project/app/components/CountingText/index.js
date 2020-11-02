@@ -40,6 +40,7 @@ function CountingText({ defulatValue, maxLength, onChange, onCancel }) {
     const remain = maxLength - value.length;
     function handleChange(){
       onChange(value);
+      onCancel();
     }
 
   function handleChangeValue(e){

@@ -100,5 +100,11 @@ export const GET_COMMENTS = 'app/App/GET_COMMENTS';
 export const GET_COMMENTS_SUCCESS = 'app/App/GET_COMMENTS_SUCCESS';
 export const GET_COMMENTS_FAIL = 'app/App/GET_COMMENTS_FAIL';
 
+
+
+export const ADD_COMMENT = 'app/App/ADD_COMMENT';
+export const ADD_COMMENT_SUCCESS = 'app/App/ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAIL = 'app/App/ADD_COMMENT_FAIL';
+
 export const FOLLOWERS_TYPE = 'followers';
 export const FOLLOWINGS_TYPE = 'followings';

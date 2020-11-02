@@ -70,6 +70,9 @@ import {
   GET_COMMENTS,
   GET_COMMENTS_SUCCESS,
   GET_COMMENTS_FAIL,
+  ADD_COMMENT,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAIL,
 } from './constants';
 
 export const initialState = {
@@ -169,6 +172,13 @@ export const initialState = {
     data:null,
     error:null,
   },
+
+  addComment:{
+    data:null,
+    params:null,
+    error:null,
+  },
+
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -530,6 +540,7 @@ const appReducer = (state = initialState, action) =>
       case GET_COMMENTS:
         draft.comments.data = null;
         draft.comments.error = null;
+        draft.addComment = initialState.addComment;
         break;
       case GET_COMMENTS_SUCCESS:
         draft.comments.data = action.data;
@@ -539,6 +550,21 @@ const appReducer = (state = initialState, action) =>
         draft.comments.data = null;
         draft.comments.error = action.error;
         break;
+
+
+        case ADD_COMMENT:
+          draft.addComment.params = action.params;
+          draft.addComment.data = null;
+          draft.addComment.error = null;
+          break;
+          case ADD_COMMENT_SUCCESS:
+            draft.addComment.params = null;
+            draft.addComment.data = action.data;
+            draft.addComment.error = null;
+          case ADD_COMMENT_FAIL:
+          draft.addComment.params = null;
+          draft.addComment.data = null;
+          draft.addComment.error = action.error;
     }
   });
 

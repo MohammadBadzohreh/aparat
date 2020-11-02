@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState,memo } from 'react';
 import propTypes from 'prop-types';
 import styled from 'styled-components';
 import { Button } from '@material-ui/core';
@@ -6,6 +6,11 @@ import { Person as UserIcon} from '@material-ui/icons';
 import { getAge } from 'utils/helpers';
 import { COMMENT_STATE_ACCEPTED } from 'utils/constants';
 import CountingText from 'components/CountingText';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { addCommentsAction } from 'containers/App/actions';
+import { makeSelectAddedComment } from 'containers/App/selectors';
+import { createStructuredSelector } from 'reselect';
 
 const CommentItemWrapper = styled.div`
 display: flex;
@@ -86,12 +91,12 @@ padding: 1em 1.2em;
 }
 `
 
-function CommentItem({data,isSubItem}){
-    console.log(data);
+function CommentItem({data,isSubItem,handleAddComment}){
     const [showAnswerCard,setShowAnswerCard] = useState(false);
-
     function handleChangeAnswer(value){
-        console.log(value);
+       if(value){
+           handleAddComment({"video_id":data.video_id,"body":value,"parent_id":data.id});
+       }
     }
 return(
     <CommentItemWrapper>
@@ -124,8 +129,6 @@ return(
                 {
                     showAnswerCard && <CountingText onChange={handleChangeAnswer} onCancel={()=>setShowAnswerCard(false)} maxLength={5} />
                 }
-               
-                
             </div>
             {
                 !!(data.children && data.children.length) && data.children.map(item=> <CommentItem key={item.id} data={item} isSubItem />)
@@ -150,8 +153,21 @@ return(
 CommentItem.prototype={
     data: propTypes.object,
     isSubItem:propTypes.bool,
+    handleAddComment:propTypes.func.isRequired,
   }
 CommentItem.defaultProps={
     isSubItem:false,
 }
-export default CommentItem;
+
+
+
+
+function mapDispatchToProps(dispatch){
+    return {
+        handleAddComment : (data) => dispatch(addCommentsAction(data)),
+    }
+}
+
+const withStore = connect(undefined,mapDispatchToProps);
+
+export default  compose(memo,withStore)(CommentItem);
