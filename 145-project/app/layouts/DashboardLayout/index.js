@@ -19,6 +19,7 @@ import { compose } from 'redux';
 import NavBar from './NavBar';
 import SidebarDrawer from './SidebarDrawer';
 import Sidebar from './Sidebar';
+import NotificationBox from 'components/NotificationBox';
 
 const StyledDashboardWrapper = styled.div`
   background: #fefefe;
@@ -62,6 +63,7 @@ function DashboardLayout({
           {children}
         </Grid>
       </Grid>
+      <NotificationBox />
     </StyledDashboardWrapper>
   );
 }
