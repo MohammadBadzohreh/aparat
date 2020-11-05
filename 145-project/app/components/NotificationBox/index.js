@@ -4,10 +4,15 @@
  *
  */
 
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import {Close as CloseIcon} from "@material-ui/icons";
+import { createStructuredSelector } from 'reselect';
+import { makeSelectNotificationBox } from 'containers/App/selectors';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { hideNotificationBoxAction } from 'containers/App/actions';
 
 
 export const NOTIFICATION_TYPE_WARNING = "warning";
@@ -73,26 +78,45 @@ background: #e06f6f;
 }
 `;
 
-function NotificationBox({title,type}) {
-  return <NotificationBoxWrapper className={type}>
-    <p className="body">{title.trim()}</p>
+function NotificationBox({notificationBoxData,handleHideNotification}) {
+  if(notificationBoxData.type)
+    useEffect(()=>{
+      if(notificationBoxData.type){
+        setTimeout(function(){
+          hideNotification();
+        },5000);
+        return ()=> handleHideNotification();
+      }
+    });
+  function hideNotification(){
+    handleHideNotification();
+  }
+  if(!notificationBoxData.type){
+    return null;
+  };
+  return <NotificationBoxWrapper className={notificationBoxData.type}>
+    <p className="body">{notificationBoxData.title.trim()}</p>
     <div className="iconWrapper">
-    <CloseIcon className="icon" />
+    <CloseIcon onClick={hideNotification}  className="icon" />
     </div>
     
   </NotificationBoxWrapper>
-      ;
 }
 
 NotificationBox.propTypes = {
-  title: PropTypes.string,
-  type: PropTypes.oneOf(NOTIFICATION_TYPES),
+  notificationBoxData:PropTypes.object,
 };
 NotificationBox.defaultProps = {
-  title : `
-  این متنی هست که قراره باشه
-  `,
-  type: NOTIFICATION_TYPE_WARNING,
 };
 
-export default memo(NotificationBox);
+const mapStateToProps = createStructuredSelector({
+  notificationBoxData : makeSelectNotificationBox(),
+});
+function mapDispatchToProps(dispatch){
+  return{
+    handleHideNotification: () =>dispatch(hideNotificationBoxAction()),
+  }
+}
+const withStore = connect(mapStateToProps,mapDispatchToProps);
+
+export default compose(memo,withStore)(NotificationBox);

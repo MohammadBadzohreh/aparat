@@ -106,5 +106,9 @@ export const ADD_COMMENT = 'app/App/ADD_COMMENT';
 export const ADD_COMMENT_SUCCESS = 'app/App/ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAIL = 'app/App/ADD_COMMENT_FAIL';
 
+
+export const SHOW_NOTIFICATION_BOX = 'app/App/SHOW_NOTIFICATION_BOX';
+export const HIDE_NOTIFICATION_BOX = 'app/App/HIDE_NOTIFICATION_BOX';
+
 export const FOLLOWERS_TYPE = 'followers';
 export const FOLLOWINGS_TYPE = 'followings';

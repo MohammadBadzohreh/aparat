@@ -71,6 +71,8 @@ import {
   addCommentSuccessAction,
   addCommentFailAction,
   getCommentsAction,
+  showNotificationBoxAction,
+  hideNotificationBoxAction,
 } from './actions';
 
 import {
@@ -96,6 +98,7 @@ import {
   followChannelApi,
 } from './APIs/users';
 import { addCommentApi, getCommentApi } from './APIs/comment';
+import { NOTIFICATION_TYPE_ERROR, NOTIFICATION_TYPE_SUCCESS } from 'components/NotificationBox';
 
 const identity = a => a;
 
@@ -318,9 +321,11 @@ function* addComment({params}) {
     const response = yield call(addCommentApi ,params);
     yield getComments();
     yield put(addCommentSuccessAction(response.data));
+    yield put(showNotificationBoxAction("دیدگاه شما با موفقیت اضافه شد.",NOTIFICATION_TYPE_SUCCESS));
   
   } catch (error) {
     yield put(addCommentFailAction(error));
+    yield put(showNotificationBoxAction("در افزودن دیدگاه خطایی به وجود آمده است.",NOTIFICATION_TYPE_ERROR));
   }
 }
 

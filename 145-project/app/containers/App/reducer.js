@@ -73,6 +73,8 @@ import {
   ADD_COMMENT,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAIL,
+  SHOW_NOTIFICATION_BOX,
+  HIDE_NOTIFICATION_BOX,
 } from './constants';
 
 export const initialState = {
@@ -178,6 +180,10 @@ export const initialState = {
     params:null,
     error:null,
   },
+  notificationBox:{
+    type:null,
+    title:null,
+  }
 
 };
 
@@ -550,8 +556,6 @@ const appReducer = (state = initialState, action) =>
         draft.comments.data = null;
         draft.comments.error = action.error;
         break;
-
-
         case ADD_COMMENT:
           draft.addComment.params = action.params;
           draft.addComment.data = null;
@@ -561,10 +565,21 @@ const appReducer = (state = initialState, action) =>
             draft.addComment.params = null;
             draft.addComment.data = action.data;
             draft.addComment.error = null;
-          case ADD_COMMENT_FAIL:
-          draft.addComment.params = null;
-          draft.addComment.data = null;
-          draft.addComment.error = action.error;
+            break;
+            case ADD_COMMENT_FAIL:
+              draft.addComment.params = null;
+              draft.addComment.data = null;
+              draft.addComment.error = action.error;
+              break;
+
+            case SHOW_NOTIFICATION_BOX:
+              draft.notificationBox.type = action.params.type;
+              draft.notificationBox.title = action.params.title;
+              break;
+            case HIDE_NOTIFICATION_BOX:
+              draft.notificationBox.type = null;
+              draft.notificationBox.title = null;
+              break;
     }
   });
 

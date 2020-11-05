@@ -20,6 +20,13 @@ const makeSelectError = () =>
     selectApp,
     appState => appState && appState.error,
   );
+  const makeSelectNotificationBox = () =>
+  createSelector(
+    selectApp,
+    appState => appState.notificationBox,
+  );
+
+
 
 const makeSelectDrawerIsOpen = () =>
   createSelector(
@@ -225,4 +232,5 @@ export {
   makeSelectFollowChannel,
   makeSelectComments,
   makeSelectAddedComment,
+  makeSelectNotificationBox,
 };

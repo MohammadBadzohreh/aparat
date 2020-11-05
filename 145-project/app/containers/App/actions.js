@@ -73,6 +73,8 @@ import {
   ADD_COMMENT,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAIL,
+  SHOW_NOTIFICATION_BOX,
+  HIDE_NOTIFICATION_BOX,
 } from './constants';
 
 export function errorHappenAction(error) {
@@ -548,3 +550,22 @@ export function addCommentFailAction(error) {
     error,
   };
 }
+
+// notifications
+
+export function showNotificationBoxAction(title,type) {
+  return {
+    type: SHOW_NOTIFICATION_BOX ,
+    params:{
+      title,type
+    }
+  };
+}
+
+
+export function hideNotificationBoxAction() {
+  return {
+    type: HIDE_NOTIFICATION_BOX,
+    };
+}
+
