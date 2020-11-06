@@ -17,5 +17,13 @@ export function addCommentApi(params) {
   return request(config);
 }
 
+export function deleteCommentApi({comment}) {
+  const config = {
+    method: 'delete',
+    url: `/comment/${comment}`,
+  };
+  return request(config);
+}
+
 
 

@@ -161,6 +161,11 @@ const makeSelectFollowersList = () =>
     selectApp,
     appState => appState.addComment,
   );
+  const makeSelectDeletedComment = () =>
+  createSelector(
+    selectApp,
+    appState => appState.deleteComment,
+  );
 
 
   
@@ -205,6 +210,11 @@ const makeSelectFollowersList = () =>
       return appState.comments;
     }
   );
+  const makeSelectChannelStatistics = () =>
+  createSelector(
+    selectApp,
+    appState => appState.channelStatistics,
+  );
 
 export {
   makeSelectLocation,
@@ -233,4 +243,6 @@ export {
   makeSelectComments,
   makeSelectAddedComment,
   makeSelectNotificationBox,
+  makeSelectDeletedComment,
+  makeSelectChannelStatistics,
 };

@@ -32,6 +32,7 @@ import reducer from './reducer';
 import saga from './saga';
 
 import GlobalStyle from '../../global-styles';
+import StatisticsChannelPage from 'containers/StatisticsChannelPage/Loadable';
 
 function App() {
   useInjectReducer({ key: 'app', reducer });
@@ -49,6 +50,7 @@ function App() {
         <Route exact path={routes.SHOW_VIDEO_ROUTE} component={VideoShowPage} />
         <Route exact path={routes.FOLLOW_ROUTE} component={ShowFollowPage} />
         <Route exact path={routes.COMMENT_ROUTE} component={CommentPage} />
+        <Route exact path={routes.CHANNEL_STATISTICS_ROUTE} component={StatisticsChannelPage} />
         <Route
           exact
           path={routes.GET_VIDEO_ROUTE}

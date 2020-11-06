@@ -20,7 +20,7 @@ import {
 } from '@material-ui/icons';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE } from 'containers/App/routes';
+import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE, COMMENT_ROUTE, FOLLOW_ROUTE,CHANNEL_STATISTICS_ROUTE } from 'containers/App/routes';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLocation } from 'containers/App/selectors';
 
@@ -153,21 +153,26 @@ function Sidebar({ dispatch, location }) {
           <ListItemText primary="ویدیوهای من" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button
+        onClick={()=>dispatch(push(COMMENT_ROUTE))}
+        >
           <ListItemIcon>
             <CommentIcon />
           </ListItemIcon>
           <ListItemText primary="دیدگاه ها" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button
+          onClick={() =>dispatch(push(FOLLOW_ROUTE))}
+          >
           <ListItemIcon>
             <FollowedChannelsIcon />
           </ListItemIcon>
           <ListItemText primary="کانال های دنبال شده" />
         </ListItem>
 
-        <ListItem button>
+        <ListItem button
+        onClick = {()=>dispatch(push(CHANNEL_STATISTICS_ROUTE))}>
           <ListItemIcon>
             <ChartIcon />
           </ListItemIcon>

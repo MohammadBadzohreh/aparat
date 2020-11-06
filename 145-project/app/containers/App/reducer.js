@@ -75,6 +75,12 @@ import {
   ADD_COMMENT_FAIL,
   SHOW_NOTIFICATION_BOX,
   HIDE_NOTIFICATION_BOX,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  GET_CHANNEL_STATISTICS,
+  GET_CHANNEL_STATISTICS_SUCCESS,
+  GET_CHANNEL_STATISTICS_FAIL,
 } from './constants';
 
 export const initialState = {
@@ -183,8 +189,17 @@ export const initialState = {
   notificationBox:{
     type:null,
     title:null,
+  },
+  deleteComment:{
+    data:null,
+    error:null,
+    params:null,
+  },
+  channelStatistics:{
+    range:null,
+    data:null,
+    error:null,
   }
-
 };
 
 /* eslint-disable default-case, no-param-reassign */
@@ -572,6 +587,37 @@ const appReducer = (state = initialState, action) =>
               draft.addComment.error = action.error;
               break;
 
+              case DELETE_COMMENT:
+          draft.deleteComment.data = null;
+          draft.deleteComment.data = null;
+          draft.deleteComment.params = action.params;        
+          break;
+          case DELETE_COMMENT_SUCCESS:
+            draft.deleteComment.params = null;
+            draft.deleteComment.data = action.data;
+            draft.deleteComment.error = null;
+            break;
+            case DELETE_COMMENT_FAIL:
+              draft.deleteComment.params = null;
+              draft.deleteComment.data = null;
+              draft.deleteComment.error = action.error;
+              break;
+              // channel statistics
+              case GET_CHANNEL_STATISTICS:
+                draft.channelStatistics.range = action.range;
+                draft.channelStatistics.data = null;
+                draft.channelStatistics.error = null;
+                break;
+              case GET_CHANNEL_STATISTICS_SUCCESS:
+                draft.channelStatistics.range = null;
+                draft.channelStatistics.data = action.data;
+                draft.channelStatistics.error = null;
+                break;
+              case GET_CHANNEL_STATISTICS_FAIL:
+                draft.channelStatistics.range = null;
+                draft.channelStatistics.data = null;
+                draft.channelStatistics.error = action.error;
+                break;
             case SHOW_NOTIFICATION_BOX:
               draft.notificationBox.type = action.params.type;
               draft.notificationBox.title = action.params.title;
@@ -580,6 +626,7 @@ const appReducer = (state = initialState, action) =>
               draft.notificationBox.type = null;
               draft.notificationBox.title = null;
               break;
+
     }
   });
 

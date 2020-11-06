@@ -8,7 +8,7 @@ import { COMMENT_STATE_ACCEPTED } from 'utils/constants';
 import CountingText from 'components/CountingText';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { addCommentsAction } from 'containers/App/actions';
+import { addCommentsAction, deleteCommentsAction } from 'containers/App/actions';
 import { makeSelectAddedComment } from 'containers/App/selectors';
 import { createStructuredSelector } from 'reselect';
 
@@ -91,12 +91,15 @@ padding: 1em 1.2em;
 }
 `
 
-function CommentItem({data,isSubItem,handleAddComment}){
+function CommentItem({data,isSubItem,handleAddComment , handleDeleteComment}){
     const [showAnswerCard,setShowAnswerCard] = useState(false);
     function handleChangeAnswer(value){
        if(value){
            handleAddComment({"video_id":data.video_id,"body":value,"parent_id":data.id});
        }
+    }
+    function deleteComment(){
+        handleDeleteComment(data.id);
     }
 return(
     <CommentItemWrapper>
@@ -125,13 +128,13 @@ return(
                         <Button className="btn btn-accept">تایید دیدگاه</Button>
                     )
                 }
-                <Button className="btn btn-delete">حذف دیدگاه</Button>
+                <Button className="btn btn-delete" onClick={deleteComment}>حذف دیدگاه</Button>
                 {
                     showAnswerCard && <CountingText onChange={handleChangeAnswer} onCancel={()=>setShowAnswerCard(false)} maxLength={5} />
                 }
             </div>
             {
-                !!(data.children && data.children.length) && data.children.map(item=> <CommentItem key={item.id} data={item} isSubItem />)
+                !!(data.children && data.children.length) && data.children.map(item=> <CommentItem key={item.id} data={item} isSubItem handleDeleteComment={handleDeleteComment} />)
             }
         </div>
         {
@@ -154,6 +157,7 @@ CommentItem.prototype={
     data: propTypes.object,
     isSubItem:propTypes.bool,
     handleAddComment:propTypes.func.isRequired,
+    handleDeleteComment: propTypes.func.isRequired,
   }
 CommentItem.defaultProps={
     isSubItem:false,
@@ -165,6 +169,7 @@ CommentItem.defaultProps={
 function mapDispatchToProps(dispatch){
     return {
         handleAddComment : (data) => dispatch(addCommentsAction(data)),
+        handleDeleteComment: (comment_id) => dispatch(deleteCommentsAction(comment_id)),
     }
 }
 

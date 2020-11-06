@@ -75,6 +75,12 @@ import {
   ADD_COMMENT_FAIL,
   SHOW_NOTIFICATION_BOX,
   HIDE_NOTIFICATION_BOX,
+  DELETE_COMMENT,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_FAIL,
+  GET_CHANNEL_STATISTICS,
+  GET_CHANNEL_STATISTICS_SUCCESS,
+  GET_CHANNEL_STATISTICS_FAIL,
 } from './constants';
 
 export function errorHappenAction(error) {
@@ -568,4 +574,50 @@ export function hideNotificationBoxAction() {
     type: HIDE_NOTIFICATION_BOX,
     };
 }
+
+
+// delete comment
+
+export function deleteCommentsAction(comment_id) {
+  return {
+    type: DELETE_COMMENT,
+    params :{ comment: comment_id},
+  };
+}
+export function deleteCommentSuccessAction(data) {
+  return {
+    type: DELETE_COMMENT_SUCCESS,
+    data,
+  };
+}
+export function deleteCommentFailAction(error) {
+  return {
+    type: DELETE_COMMENT_FAIL,
+    error,
+  };
+}
+
+// channel statistics
+
+
+export function getChannelStatistics(range) {
+  return {
+    type: GET_CHANNEL_STATISTICS,
+    range
+  };
+}
+export function getChannelStatisticsSuccess(data) {
+  return {
+    type: GET_CHANNEL_STATISTICS_SUCCESS,
+    data,
+  };
+}
+export function getChannelStatisticsFail(error) {
+  return {
+    type: GET_CHANNEL_STATISTICS_FAIL,
+    error,
+  };
+}
+
+
 

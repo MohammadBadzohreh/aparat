@@ -7,3 +7,4 @@ export const GET_VIDEO_ROUTE = '/video/:slug/update';
 export const SHOW_VIDEO_ROUTE = '/:slug/view';
 export const FOLLOW_ROUTE = '/followed';
 export const COMMENT_ROUTE = '/comments';
+export const CHANNEL_STATISTICS_ROUTE = "/statistics";

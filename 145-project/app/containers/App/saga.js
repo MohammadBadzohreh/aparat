@@ -25,6 +25,8 @@ import {
   FOLLOW_CHANNEL,
   GET_COMMENTS,
   ADD_COMMENT,
+  DELETE_COMMENT,
+  GET_CHANNEL_STATISTICS,
 } from './constants';
 import {
   fileUploadFailAction,
@@ -73,6 +75,8 @@ import {
   getCommentsAction,
   showNotificationBoxAction,
   hideNotificationBoxAction,
+  getChannelStatisticsSuccess,
+  getChannelStatisticsFail,
 } from './actions';
 
 import {
@@ -97,8 +101,9 @@ import {
   unfollowChannnelApi,
   followChannelApi,
 } from './APIs/users';
-import { addCommentApi, getCommentApi } from './APIs/comment';
+import { addCommentApi, deleteCommentApi, getCommentApi } from './APIs/comment';
 import { NOTIFICATION_TYPE_ERROR, NOTIFICATION_TYPE_SUCCESS } from 'components/NotificationBox';
+import { getChannelStatiticsApi } from './APIs/channels';
 
 const identity = a => a;
 
@@ -330,6 +335,33 @@ function* addComment({params}) {
 }
 
 
+function* deleteComment({params}) {
+  try {
+    const response = yield call(deleteCommentApi ,params);
+    yield getComments();
+    yield put(addCommentSuccessAction(response.data));
+    yield put(showNotificationBoxAction("دیدگاه شما با موفقیت حذف شد.",NOTIFICATION_TYPE_SUCCESS));
+  
+  } catch (error) {
+    yield put(addCommentFailAction(error));
+    yield put(showNotificationBoxAction("در حذف دیدگاه خطایی به وجود آمده است.",NOTIFICATION_TYPE_ERROR));
+  }
+}
+
+
+
+function* getChannelStatitics({range}) {
+  try {
+    const response = yield call(getChannelStatiticsApi ,range);
+    yield getComments();
+    yield put(getChannelStatisticsSuccess(response.data));
+  } catch (error) {
+    yield put(getChannelStatisticsFail(error));
+  }
+}
+
+
+
 
 
 export default function* defaultSaga() {
@@ -353,4 +385,6 @@ export default function* defaultSaga() {
   yield takeLatest(FOLLOW_CHANNEL, followChannel);
   yield takeLatest(GET_COMMENTS, getComments);
   yield takeLatest(ADD_COMMENT, addComment);
+  yield takeLatest(DELETE_COMMENT, deleteComment);
+  yield takeLatest(GET_CHANNEL_STATISTICS, getChannelStatitics);
 }
