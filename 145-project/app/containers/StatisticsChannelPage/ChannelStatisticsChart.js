@@ -6,6 +6,8 @@ import { Line as LineChart } from 'react-chartjs-2';
 
 const VideoStatisticsWrapper = styled(Grid)`
   max-width: 100%;
+  border: 1px solid #00000017;
+  box-shadow: 0px 0px 4px #eee;
 `;
 
 function ChannelStatisticsChart({ data, range, handleChange }) {

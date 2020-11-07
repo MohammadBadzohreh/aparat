@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { compose } from 'redux';
+import styled from 'styled-components';
+
 import DashboardLayout from 'layouts/DashboardLayout';
 import { getChannelStatistics } from 'containers/App/actions';
 import { createStructuredSelector } from 'reselect';
@@ -18,7 +20,18 @@ import LoadingWithText from 'components/LodingWithText';
 import ErrorBox from 'components/ErrorBox';
 import ChannelStatisticsCard from './ChannelStatisticsCard';
 import ChannelStatisticsChart from './ChannelStatisticsChart';
+import TopVideoInformation from './TopVideoInformation';
 
+
+const InfoWrapper = styled.div`
+max-width: 900px !important;
+margin: auto !important;
+padding: 0;
+margin: auto;
+canvas {
+  max-width: 100%;
+}
+`
 export function StatisticsChannelpage({getChannelStatistics,channelStatistics}) {
   const [range,setRange] = useState(7);
   console.log(channelStatistics);
@@ -28,10 +41,11 @@ export function StatisticsChannelpage({getChannelStatistics,channelStatistics}) 
   return (
     <div>
       <Helmet>
-        <title>StatisticsChannel</title>
+        <title>statistics cahnnel</title>
         <meta name="description" content="Description of StatisticsChannel" />
       </Helmet>
       <DashboardLayout>
+        <InfoWrapper>
       {channelStatistics.range && (
         <LoadingWithText />
       )}
@@ -42,18 +56,17 @@ export function StatisticsChannelpage({getChannelStatistics,channelStatistics}) 
            <>
          <ChannelStatisticsCard data={channelStatistics.data} />
          <ChannelStatisticsChart data = {channelStatistics.data.views} range={range} handleChange={setRange} />
+         <TopVideoInformation topVideos={channelStatistics.data.top_videos} />
          </>
           )
       }
-
       {
         channelStatistics.error && (
           <ErrorBox error={{
             response : "خطایی رخ داده است"
           }} forceMessge="خطایی در سرور رخ داده است." />
         )}
-
-        
+</InfoWrapper>
       </DashboardLayout>
       
     </div>

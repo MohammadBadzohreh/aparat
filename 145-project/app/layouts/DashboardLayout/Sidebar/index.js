@@ -102,8 +102,9 @@ const Wrapper = styled.div`
   }
 
   & .logoutItem {
-    position: absolute;
-    bottom: 0;
+    position: relative;
+    bottom: -180px;
+}
   }
 
   @media (max-width: 768px) {

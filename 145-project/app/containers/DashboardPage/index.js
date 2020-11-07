@@ -4,8 +4,8 @@
  *
  */
 
-import React from 'react';
-// import PropTypes from 'prop-types';
+import React, { memo, useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
 import { createStructuredSelector } from 'reselect';
@@ -17,9 +17,19 @@ import DashboardLayout from 'layouts/DashboardLayout';
 
 import makeSelectDashboardPage from './selectors';
 import reducer from './reducer';
+import { makeSelectChannelStatistics } from 'containers/App/selectors';
+import { getChannelStatistics } from 'containers/App/actions';
+import ChannelStatisticsCard from 'containers/StatisticsChannelPage/ChannelStatisticsCard';
+import LoadingWithText from 'components/LodingWithText';
 
-export function DashboardPage() {
+export function DashboardPage({getChannelStat,statisticsChannel}) {
   useInjectReducer({ key: 'dashboardPage', reducer });
+
+  const [range,setRange] = useState(7);
+
+  useEffect(()=>{
+    getChannelStat(range);
+  },[]);
 
   return (
     <div>
@@ -29,23 +39,31 @@ export function DashboardPage() {
       </Helmet>
 
       <DashboardLayout>
-        <h1>داشبورد</h1>
+      {statisticsChannel.range && (
+        <LoadingWithText />
+      )}
+
+        {statisticsChannel.data && (
+        <ChannelStatisticsCard data={statisticsChannel.data} />
+        )}
       </DashboardLayout>
     </div>
   );
 }
 
-// DashboardPage.propTypes = {
-//   // dispatch: PropTypes.func.isRequired,
-// };
+DashboardPage.propTypes = {
+  statisticsChannel : PropTypes.object.isRequired,
+  getChannelStat : PropTypes.func.isRequired,
+};
 
 const mapStateToProps = createStructuredSelector({
   dashboardPage: makeSelectDashboardPage(),
+  statisticsChannel : makeSelectChannelStatistics(),
 });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getChannelStat : (range) => dispatch(getChannelStatistics(range)),
   };
 }
 
@@ -54,4 +72,4 @@ const withConnect = connect(
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(DashboardPage);
+export default compose(memo,withConnect)(DashboardPage);

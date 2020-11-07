@@ -4,9 +4,10 @@
  *
  */
 
-import React, { useState } from 'react';
-import { IconButton, Menu, MenuItem } from '@material-ui/core';
+import React, { memo, useState } from 'react';
 import styled from 'styled-components';
+import propTypes from 'prop-types';
+import { IconButton, Menu, MenuItem } from '@material-ui/core';
 import {
   AccountCircle,
   Settings as SettingsIcon,
@@ -17,6 +18,11 @@ import {
   PieChart as ChartIcon,
   PowerSettingsNew as LoguotIcon,
 } from '@material-ui/icons';
+import { push } from 'connected-react-router';
+import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE, COMMENT_ROUTE, FOLLOW_ROUTE,CHANNEL_STATISTICS_ROUTE } from 'containers/App/routes';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+
 
 const StyledMenu = styled(Menu)`
   margin-top: 30px;
@@ -73,10 +79,12 @@ const StyledMenu = styled(Menu)`
   }
 `;
 
-function UserMenu() {
+function UserMenu({handleRedirect}) {
   const [anchorEl, setAnchorEl] = useState(null);
 
-  function closeMenu() {
+  function closeMenu(path) {
+    console.log(path);
+    handleRedirect(path);
     setAnchorEl(null);
   }
 
@@ -110,23 +118,23 @@ function UserMenu() {
           </div>
         </MenuItem>
 
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={() => closeMenu(DASHBOARD_ROUTE)}>
           <DashboardIcon />
           داشبرد
         </MenuItem>
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={()=>closeMenu(MYVIDEOS_ROUTE)}>
           <MovieIcon />
           ویدیوهای من
         </MenuItem>
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={()=>closeMenu(COMMENT_ROUTE)}>
           <CommentIcon />
           دیدگاه ها
         </MenuItem>
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={()=>closeMenu(FOLLOW_ROUTE)}>
           <FollowedChannelsIcon />
           کانال های دنبال شده
         </MenuItem>
-        <MenuItem onClick={closeMenu}>
+        <MenuItem onClick={()=>closeMenu(CHANNEL_STATISTICS_ROUTE)}>
           <ChartIcon />
           آمار بازدید
         </MenuItem>
@@ -138,5 +146,15 @@ function UserMenu() {
     </>
   );
 }
+UserMenu.prototype = {
+  handleRedirect:propTypes.func.isRequired,
+}
+function mapDispatchToProps(dispatch){
+  return {
+    handleRedirect : (path) => dispatch(push(path)),
+    
+  };
+}
+const withStore = connect(undefined,mapDispatchToProps);
 
-export default UserMenu;
+export default compose(memo,withStore)(UserMenu);

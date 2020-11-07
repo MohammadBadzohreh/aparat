@@ -33,7 +33,10 @@ const StyledDashboardWrapper = styled.div`
   & .contentWrapper {
     padding: 15px;
     flex: 1;
+    height: calc(100vh - 48px);
+    overflow-y: auto;
   }
+
 `;
 
 function DashboardLayout({

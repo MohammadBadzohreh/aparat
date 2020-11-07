@@ -1,6 +1,6 @@
 /**
  *
- * Tests for Sidebar
+ * Tests for ChannelInformationPage
  *
  * @see https://github.com/react-boilerplate/react-boilerplate/tree/master/docs/testing
  *
@@ -10,12 +10,13 @@ import React from 'react';
 import { render } from 'react-testing-library';
 // import 'jest-dom/extend-expect'; // add some helpful assertions
 
-import Sidebar from '../index';
+import { ChannelInformationPage } from '../index';
 
-describe('<Sidebar />', () => {
+describe('<ChannelInformationPage />', () => {
   it('Expect to not log errors in console', () => {
     const spy = jest.spyOn(global.console, 'error');
-    render(<Sidebar />);
+    const dispatch = jest.fn();
+    render(<ChannelInformationPage dispatch={dispatch} />);
     expect(spy).not.toHaveBeenCalled();
   });
 
@@ -31,7 +32,7 @@ describe('<Sidebar />', () => {
   it.skip('Should render and match the snapshot', () => {
     const {
       container: { firstChild },
-    } = render(<Sidebar />);
+    } = render(<ChannelInformationPage />);
     expect(firstChild).toMatchSnapshot();
   });
 });

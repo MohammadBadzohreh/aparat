@@ -10,6 +10,7 @@ import {
 
 const ChannelStatiticsWrapper = styled(Grid)`
   margin-top: 2em;
+  flex-wrap:wrap;
   & .item {
     box-shadow: 0px 1px 1px 1px #bcbcbc;
     text-align: center;
