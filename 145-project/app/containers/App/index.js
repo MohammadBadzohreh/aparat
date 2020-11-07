@@ -20,7 +20,9 @@ import VideoUpdatePage from 'containers/VideoUpdatePage/Loadable';
 import VideoShowPage from 'containers/VideoShowPage/Loadable';
 import ShowFollowPage from 'containers/ShowFollowPage/Loadable';
 import CommentPage from 'containers/CommentPage/Loadable';
-
+import  ChannelInformationPage  from 'containers/ChannelInformationPage/Loadable';
+import StatisticsChannelPage from 'containers/StatisticsChannelPage/Loadable';
+import ProfilePage  from 'containers/ProfilePage/Loadable';
 import RenderError from 'components/RenderError';
 
 
@@ -32,7 +34,6 @@ import reducer from './reducer';
 import saga from './saga';
 
 import GlobalStyle from '../../global-styles';
-import StatisticsChannelPage from 'containers/StatisticsChannelPage/Loadable';
 
 function App() {
   useInjectReducer({ key: 'app', reducer });
@@ -51,6 +52,8 @@ function App() {
         <Route exact path={routes.FOLLOW_ROUTE} component={ShowFollowPage} />
         <Route exact path={routes.COMMENT_ROUTE} component={CommentPage} />
         <Route exact path={routes.CHANNEL_STATISTICS_ROUTE} component={StatisticsChannelPage} />
+        <Route exact path={routes.MY_CHANNNEL_ROUTE} component={ChannelInformationPage} />
+        <Route exact path={routes.MY_PROFILE_ROUTE} component={ProfilePage} />
         <Route
           exact
           path={routes.GET_VIDEO_ROUTE}

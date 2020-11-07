@@ -20,7 +20,7 @@ import {
 } from '@material-ui/icons';
 import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
-import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE, COMMENT_ROUTE, FOLLOW_ROUTE,CHANNEL_STATISTICS_ROUTE } from 'containers/App/routes';
+import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE, COMMENT_ROUTE, FOLLOW_ROUTE,CHANNEL_STATISTICS_ROUTE, MY_CHANNNEL_ROUTE,MY_PROFILE_ROUTE } from 'containers/App/routes';
 import { createStructuredSelector } from 'reselect';
 import { makeSelectLocation } from 'containers/App/selectors';
 
@@ -35,6 +35,7 @@ const Wrapper = styled.div`
     display: block;
     text-align: center;
     margin-bottom: 10vh;
+    cursor:pointer;
   }
 
   & .channelSetting .MuiSvgIcon-root,
@@ -125,11 +126,11 @@ function Sidebar({ dispatch, location }) {
     <Wrapper>
       <List component="nav">
         <ListItem className="channelSetting">
-          <SettingIcon className="settingIcon" />
+          <SettingIcon onClick={() => dispatch(push(MY_PROFILE_ROUTE))} className="settingIcon" />
           <ListItemIcon>
-            <AccountCircle />
+            <AccountCircle  onClick={() => dispatch(push(MY_CHANNNEL_ROUTE))} />
           </ListItemIcon>
-          <ListItemText primary="نام کانال" />
+          <ListItemText onClick={() => dispatch(push(MY_CHANNNEL_ROUTE))} primary="نام کانال" />
         </ListItem>
 
         <ListItem

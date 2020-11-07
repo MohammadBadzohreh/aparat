@@ -8,3 +8,5 @@ export const SHOW_VIDEO_ROUTE = '/:slug/view';
 export const FOLLOW_ROUTE = '/followed';
 export const COMMENT_ROUTE = '/comments';
 export const CHANNEL_STATISTICS_ROUTE = "/statistics";
+export const MY_CHANNNEL_ROUTE = "/my-channel";
+export const MY_PROFILE_ROUTE = "/my-profile";
