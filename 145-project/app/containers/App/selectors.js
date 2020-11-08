@@ -216,6 +216,19 @@ const makeSelectFollowersList = () =>
     appState => appState.channelStatistics,
   );
 
+  const makeSelectUserMe = () =>
+  createSelector(
+    selectApp,
+    appState => appState.userMe,
+  );
+
+  
+  const makeSelectChannelInformation = () =>
+  createSelector(
+    selectApp,
+    appState => appState.channelInformation,
+  );
+
 export {
   makeSelectLocation,
   makeSelectApp,
@@ -245,4 +258,6 @@ export {
   makeSelectNotificationBox,
   makeSelectDeletedComment,
   makeSelectChannelStatistics,
+  makeSelectUserMe,
+  makeSelectChannelInformation,
 };

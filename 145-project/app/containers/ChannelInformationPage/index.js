@@ -4,25 +4,46 @@
  *
  */
 
-import React from 'react';
+import React, { memo, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Helmet } from 'react-helmet';
+import { createStructuredSelector } from 'reselect';
 import { compose } from 'redux';
 import DashboardLayout from 'layouts/DashboardLayout';
+import {makeSelectChannelInformation} from "containers/App/selectors";
 
-export function ChannelInformationPage() {
+import {getChannelInformationAction,getChannelInformationClearAction} from "containers/App/actions";
+import LoadingWithText from 'components/LodingWithText';
+import ErrorBox from 'components/ErrorBox';
+
+export function ChannelInformationPage({channelInformation,getChannelInformation,clearChannelInformation}) {
+  useEffect(()=>{
+    getChannelInformation("user1");
+    return clearChannelInformation;
+  },[]);
+
+  console.log(channelInformation);
+
   return (
     <div>
       <Helmet>
         <title>کانال من</title>
         <meta
-          name="description"
+          name="channel"
           content="Description of ChannelInformationPage"
         />
       </Helmet>
       <DashboardLayout showSidebar={false}>
-        my channel page
+      {
+          channelInformation.name && <LoadingWithText />
+        }
+
+{
+          channelInformation.error && <ErrorBox error={{}} forceMessge="در بارگزاری اطلاعات خطای به وجود آمده است" />
+        }
+
+
 
       </DashboardLayout>
     </div>
@@ -30,18 +51,26 @@ export function ChannelInformationPage() {
 }
 
 ChannelInformationPage.propTypes = {
-  dispatch: PropTypes.func.isRequired,
+  getChannelInformation:PropTypes.func.isRequired,
+  clearChannelInformation:PropTypes.func.isRequired,
+  channelInformation:PropTypes.object,
+
 };
+
+const mapStateToProps = createStructuredSelector({
+  channelInformation: makeSelectChannelInformation(),
+  });
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
+    getChannelInformation: (name) =>dispatch(getChannelInformationAction(name)),
+    clearChannelInformation: () =>dispatch(getChannelInformationClearAction()),
   };
 }
 
 const withConnect = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps,
 );
 
-export default compose(withConnect)(ChannelInformationPage);
+export default compose(withConnect,memo)(ChannelInformationPage);

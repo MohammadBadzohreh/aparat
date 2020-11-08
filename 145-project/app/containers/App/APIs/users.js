@@ -30,3 +30,14 @@ export function followChannelApi(channel) {
   };
   return request(config);
 }
+
+
+export function getUserMeApi(channel) {
+  const config = {
+    method: 'get',
+    url: `user/me`,
+  };
+  return request(config);
+}
+
+

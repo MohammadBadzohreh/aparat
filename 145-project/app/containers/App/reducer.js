@@ -4,6 +4,8 @@
  *
  */
 import produce from 'immer';
+import { getAuth } from 'utils/auth';
+import { getChannelStatisticsSuccess } from './actions';
 import {
   ERROR_HAPPEN,
   ERROR_CLEAR,
@@ -81,8 +83,16 @@ import {
   GET_CHANNEL_STATISTICS,
   GET_CHANNEL_STATISTICS_SUCCESS,
   GET_CHANNEL_STATISTICS_FAIL,
+  GET_USER_ME,
+  GET_USER_ME_SUCCESS,
+  GET_USER_ME_FAIL,
+  GET_CHANNEL_INFORMATION,
+  GET_CHANNEL_INFORMATION_SUCCESS,
+  GET_CHANNEL_INFORMATION_FAIL,
+  GET_CHANNEL_INFORMATION_CLEAR,
 } from './constants';
 
+const userMeItem =getAuth().userMe;
 export const initialState = {
   error: null,
   drawerIsOpen: false,
@@ -91,6 +101,10 @@ export const initialState = {
     error: null,
     data: null,
     percentage: 0,
+  },
+  userMe:{
+    data: userMeItem ? userMeItem : null,
+    error:null,
   },
   bannerUpload: {
     banner: null,
@@ -197,6 +211,11 @@ export const initialState = {
   },
   channelStatistics:{
     range:null,
+    data:null,
+    error:null,
+  },
+  channelInformation:{
+    name:null,
     data:null,
     error:null,
   }
@@ -626,6 +645,40 @@ const appReducer = (state = initialState, action) =>
               draft.notificationBox.type = null;
               draft.notificationBox.title = null;
               break;
+              // user me infromation
+
+              case GET_USER_ME:
+                draft.userMe.error = null;
+                break;
+              case GET_USER_ME_SUCCESS:
+                draft.userMe.data = action.data;
+                draft.userMe.error = null;
+                break;
+              case GET_USER_ME_FAIL:
+                draft.userMe.data = null;
+                draft.userMe.error = action.error;
+                break;
+
+                
+              case GET_CHANNEL_INFORMATION:
+                draft.channelInformation.name = action.name;
+                draft.channelInformation.error = null;
+
+                break;
+              case GET_CHANNEL_INFORMATION_SUCCESS:
+                draft.channelInformation.name = null;
+                draft.channelInformation.data = action.data;
+                draft.channelInformation.error = null;
+                break;
+                case GET_CHANNEL_INFORMATION_FAIL:
+                  draft.channelInformation.name = null;
+                  draft.channelInformation.data = null;
+                  draft.channelInformation.error = action.error;
+                  break;
+
+                  case GET_CHANNEL_INFORMATION_CLEAR:
+                    draft.channelInformation = initialState.channelInformation;
+                    break;
 
     }
   });

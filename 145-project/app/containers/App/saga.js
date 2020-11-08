@@ -27,6 +27,8 @@ import {
   ADD_COMMENT,
   DELETE_COMMENT,
   GET_CHANNEL_STATISTICS,
+  GET_USER_ME,
+  GET_CHANNEL_INFORMATION,
 } from './constants';
 import {
   fileUploadFailAction,
@@ -77,6 +79,12 @@ import {
   hideNotificationBoxAction,
   getChannelStatisticsSuccess,
   getChannelStatisticsFail,
+  getUserMeSuccess,
+  getUserMeFail,
+  getUserMe,
+  getChannelInformationSuccessAction,
+  getChannelInformationFailAction,
+  getChannelInformationAction,
 } from './actions';
 
 import {
@@ -100,10 +108,12 @@ import {
   getFollowersApi,
   unfollowChannnelApi,
   followChannelApi,
+  getUserMeApi,
 } from './APIs/users';
 import { addCommentApi, deleteCommentApi, getCommentApi } from './APIs/comment';
 import { NOTIFICATION_TYPE_ERROR, NOTIFICATION_TYPE_SUCCESS } from 'components/NotificationBox';
-import { getChannelStatiticsApi } from './APIs/channels';
+import { channelInformationApi, getChannelStatiticsApi } from './APIs/channels';
+import { setAuth } from 'utils/auth';
 
 const identity = a => a;
 
@@ -361,6 +371,27 @@ function* getChannelStatitics({range}) {
 }
 
 
+export function* getUserMeInformation() {
+  try {
+    const response = yield call(getUserMeApi);
+    yield put(getUserMeSuccess(response.data));
+  } catch (error) {
+    yield put(getUserMeFail(error));
+  }
+}
+
+function* getChannelInformation({name}) {
+  try {
+    const response = yield call(channelInformationApi,name);  
+    yield put(getChannelInformationSuccessAction(response.data));
+  } catch (error) {
+    yield put(getChannelInformationFailAction(error));
+  }
+}
+
+
+
+
 
 
 
@@ -386,5 +417,7 @@ export default function* defaultSaga() {
   yield takeLatest(GET_COMMENTS, getComments);
   yield takeLatest(ADD_COMMENT, addComment);
   yield takeLatest(DELETE_COMMENT, deleteComment);
-  yield takeLatest(GET_CHANNEL_STATISTICS, getChannelStatitics);
+  yield takeLatest(GET_CHANNEL_STATISTICS, getChannelStatitics),
+  yield takeLatest(GET_USER_ME,getUserMeInformation),
+  yield takeLatest(GET_CHANNEL_INFORMATION,getChannelInformation)
 }

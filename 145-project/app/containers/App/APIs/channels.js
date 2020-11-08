@@ -7,3 +7,14 @@ export function getChannelStatiticsApi(range) {
   };
   return request(config);
 }
+
+
+export function channelInformationApi(name) {
+  const config = {
+    method: 'get',
+    url: `/channel/${name}`,
+  };
+  return request(config);
+}
+
+

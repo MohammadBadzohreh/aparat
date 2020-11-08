@@ -81,6 +81,13 @@ import {
   GET_CHANNEL_STATISTICS,
   GET_CHANNEL_STATISTICS_SUCCESS,
   GET_CHANNEL_STATISTICS_FAIL,
+  GET_USER_ME,
+  GET_USER_ME_SUCCESS,
+  GET_USER_ME_FAIL,
+  GET_CHANNEL_INFORMATION,
+  GET_CHANNEL_INFORMATION_FAIL,
+  GET_CHANNEL_INFORMATION_SUCCESS,
+  GET_CHANNEL_INFORMATION_CLEAR,
 } from './constants';
 
 export function errorHappenAction(error) {
@@ -618,6 +625,58 @@ export function getChannelStatisticsFail(error) {
     error,
   };
 }
+
+
+// USER ME INFORMATION
+
+
+export function getUserMe() {
+  return {
+    type: GET_USER_ME,
+  };
+}
+export function getUserMeSuccess(data) {
+  return {
+    type: GET_USER_ME_SUCCESS,
+    data,
+  };
+}
+export function getUserMeFail(error) {
+  return {
+    type: GET_USER_ME_FAIL,
+    error,
+  };
+}
+
+// get channel information
+
+export function getChannelInformationAction(name) {
+  return {
+    type: GET_CHANNEL_INFORMATION,
+    name,
+  };
+}
+export function getChannelInformationSuccessAction(data) {
+  return {
+    type: GET_CHANNEL_INFORMATION_SUCCESS,
+    data,
+  };
+}
+export function getChannelInformationFailAction(error) {
+  return {
+    type: GET_CHANNEL_INFORMATION_FAIL,
+    error,
+  };
+}
+
+export function getChannelInformationClearAction() {
+  return {
+    type:GET_CHANNEL_INFORMATION_CLEAR,
+   
+  };
+}
+
+
 
 
 

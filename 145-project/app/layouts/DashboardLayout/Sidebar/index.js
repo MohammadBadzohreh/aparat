@@ -22,13 +22,17 @@ import { push } from 'connected-react-router';
 import { connect } from 'react-redux';
 import { MYVIDEOS_ROUTE, DASHBOARD_ROUTE, COMMENT_ROUTE, FOLLOW_ROUTE,CHANNEL_STATISTICS_ROUTE, MY_CHANNNEL_ROUTE,MY_PROFILE_ROUTE } from 'containers/App/routes';
 import { createStructuredSelector } from 'reselect';
-import { makeSelectLocation } from 'containers/App/selectors';
+import { makeSelectLocation, makeSelectUserMe } from 'containers/App/selectors';
 
 const Wrapper = styled.div`
   width: 180px;
   background: #fff;
   box-shadow: -1px 2px 2px #eee;
   min-height: calc(100vh - 50px);
+
+
+
+
 
   & .channelSetting {
     background: #fff;
@@ -121,16 +125,29 @@ const Wrapper = styled.div`
   }
 `;
 
-function Sidebar({ dispatch, location }) {
+const Img = styled.img`
+width: 100%;
+height: auto;
+overflow: hidden;
+border: 3px solid #ccc;
+border-radius: 50%;
+padding: 1em;`
+
+function Sidebar({ dispatch, location,user }) {
+
+  console.log();
+
+
+
   return (
     <Wrapper>
       <List component="nav">
         <ListItem className="channelSetting">
           <SettingIcon onClick={() => dispatch(push(MY_PROFILE_ROUTE))} className="settingIcon" />
           <ListItemIcon>
-            <AccountCircle  onClick={() => dispatch(push(MY_CHANNNEL_ROUTE))} />
+          <Img src={user.data.avatar} alt={user.name} onClick={() => dispatch(push(MY_CHANNNEL_ROUTE.replace(":name",user.data.channel.name)))} />
           </ListItemIcon>
-          <ListItemText onClick={() => dispatch(push(MY_CHANNNEL_ROUTE))} primary="نام کانال" />
+          <ListItemText onClick={() => dispatch(push(MY_CHANNNEL_ROUTE.replace(":name",user.data.channel.name)))} primary={user.data.name} />
         </ListItem>
 
         <ListItem
@@ -195,10 +212,13 @@ function Sidebar({ dispatch, location }) {
 Sidebar.propTypes = {
   dispatch: PropTypes.func.isRequired,
   location: PropTypes.any,
+  user:PropTypes.object,
 };
 
 const mapStateToProps = createStructuredSelector({
   location: makeSelectLocation(),
+  user: makeSelectUserMe(),
+
 });
 
 export default connect(mapStateToProps)(Sidebar);
