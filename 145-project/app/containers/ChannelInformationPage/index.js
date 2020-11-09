@@ -16,6 +16,8 @@ import {makeSelectChannelInformation} from "containers/App/selectors";
 import {getChannelInformationAction,getChannelInformationClearAction} from "containers/App/actions";
 import LoadingWithText from 'components/LodingWithText';
 import ErrorBox from 'components/ErrorBox';
+import ChannelBanner from './ChannelBanner';
+import ChannelInfoBar from './ChannelInfoBar';
 
 export function ChannelInformationPage({channelInformation,getChannelInformation,clearChannelInformation}) {
   useEffect(()=>{
@@ -35,11 +37,20 @@ export function ChannelInformationPage({channelInformation,getChannelInformation
         />
       </Helmet>
       <DashboardLayout showSidebar={false}>
-      {
+        {
           channelInformation.name && <LoadingWithText />
         }
 
-{
+        {
+          channelInformation.data && (
+            <>
+            <ChannelBanner src="https://static.cdn.asset.aparat.com/avt/26683909-7794-b__8084.jpg" />
+            <ChannelInfoBar data={channelInformation.data} />
+            </>
+          )
+        }
+
+        {
           channelInformation.error && <ErrorBox error={{}} forceMessge="در بارگزاری اطلاعات خطای به وجود آمده است" />
         }
 
