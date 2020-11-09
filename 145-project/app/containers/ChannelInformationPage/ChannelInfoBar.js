@@ -70,7 +70,6 @@ box-shadow: 0 5px 20px 0 rgba(41,42,51,.14);
 
 
 function ChannelInfoBar({data}){
-    console.log(data);
     return (
         <ChannelInfoWrapper>
             <Grid className="user_information" container>
