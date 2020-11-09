@@ -18,14 +18,14 @@ import LoadingWithText from 'components/LodingWithText';
 import ErrorBox from 'components/ErrorBox';
 import ChannelBanner from './ChannelBanner';
 import ChannelInfoBar from './ChannelInfoBar';
+import ChannelDetailInfo from './ChannelDetailInfo';
 
 export function ChannelInformationPage({channelInformation,getChannelInformation,clearChannelInformation}) {
   useEffect(()=>{
+    // todo change this point
     getChannelInformation("user1");
     return clearChannelInformation;
   },[]);
-
-  console.log(channelInformation);
 
   return (
     <div>
@@ -46,6 +46,7 @@ export function ChannelInformationPage({channelInformation,getChannelInformation
             <>
             <ChannelBanner src="https://static.cdn.asset.aparat.com/avt/26683909-7794-b__8084.jpg" />
             <ChannelInfoBar data={channelInformation.data} />
+            <ChannelDetailInfo data={channelInformation.data} />
             </>
           )
         }

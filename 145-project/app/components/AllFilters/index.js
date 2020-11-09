@@ -45,7 +45,7 @@ function AllFilters({ values, defaultValue, onChange }) {
   );
 }
 
-Filters.propTypes = {
+AllFilters.propTypes = {
   values: PropTypes.object.isRequired,
   defaultValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
