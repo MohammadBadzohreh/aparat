@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import AllFilters from 'components/AllFilters';
 import ChannelInfoTab from './ChannelInfoTab';
+import PlaylistTab from './PlaylistTab';
 
 const ChannelInfoWrapper = styled.div`
 max-width:900px;
@@ -30,6 +31,7 @@ function ChannelDetailInfo({data}){
         <ChannelInfoWrapper>
             <AllFilters values={values} defaultValue={filter} onChange={setFilter} />
             {filter ===ABOUT_CHANNEL && <ChannelInfoTab data={data} />}
+            {filter ===PLAYLISTS && <PlaylistTab data={data} />}
         </ChannelInfoWrapper>
     );
 }

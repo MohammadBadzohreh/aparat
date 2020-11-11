@@ -15,7 +15,6 @@ h3.infoItem{
 `;
 
 function ChannelInfoTab({data}){
-    console.log(data);
     return (
         <ChannelInfoTabWrapper>
             <h3 className="infoItem">اطلاعات کانال</h3>
